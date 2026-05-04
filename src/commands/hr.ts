@@ -10,34 +10,64 @@ export default {
                 .setName('accept')
                 .setDescription('Accept an applicant')
                 .addUserOption(option => option.setName('user').setDescription('The user to accept').setRequired(true))
+                .addStringOption(option => option.setName('role').setDescription('Your role for the signature').setRequired(true).addChoices(
+                    { name: 'HR Manager', value: 'HR Manager' },
+                    { name: 'HR Team', value: 'HR Team' },
+                    { name: 'Management Team', value: 'Management Team' }
+                ))
         )
         .addSubcommand(subcommand =>
             subcommand
                 .setName('reject')
                 .setDescription('Reject an applicant')
                 .addUserOption(option => option.setName('user').setDescription('The user to reject').setRequired(true))
+                .addStringOption(option => option.setName('role').setDescription('Your role for the signature').setRequired(true).addChoices(
+                    { name: 'HR Manager', value: 'HR Manager' },
+                    { name: 'HR Team', value: 'HR Team' },
+                    { name: 'Management Team', value: 'Management Team' }
+                ))
         )
         .addSubcommand(subcommand =>
             subcommand
                 .setName('questions')
                 .setDescription('Send questions to an applicant')
                 .addUserOption(option => option.setName('user').setDescription('The user to question').setRequired(true))
+                .addStringOption(option => option.setName('role').setDescription('Your role for the signature').setRequired(true).addChoices(
+                    { name: 'HR Manager', value: 'HR Manager' },
+                    { name: 'HR Team', value: 'HR Team' },
+                    { name: 'Management Team', value: 'Management Team' }
+                ))
         )
         .addSubcommand(subcommand =>
             subcommand
                 .setName('under-review')
                 .setDescription('Notify an applicant their application is under review')
                 .addUserOption(option => option.setName('user').setDescription('The user to notify').setRequired(true))
+                .addStringOption(option => option.setName('role').setDescription('Your role for the signature').setRequired(true).addChoices(
+                    { name: 'HR Manager', value: 'HR Manager' },
+                    { name: 'HR Team', value: 'HR Team' },
+                    { name: 'Management Team', value: 'Management Team' }
+                ))
         )
         .addSubcommand(subcommand =>
             subcommand
                 .setName('rules')
                 .setDescription('Display HR rules and policies')
+                .addStringOption(option => option.setName('role').setDescription('Your role for the signature').setRequired(true).addChoices(
+                    { name: 'HR Manager', value: 'HR Manager' },
+                    { name: 'HR Team', value: 'HR Team' },
+                    { name: 'Management Team', value: 'Management Team' }
+                ))
         )
         .addSubcommand(subcommand =>
             subcommand
                 .setName('server-rules')
                 .setDescription('Display server rules')
+                .addStringOption(option => option.setName('role').setDescription('Your role for the signature').setRequired(true).addChoices(
+                    { name: 'HR Manager', value: 'HR Manager' },
+                    { name: 'HR Team', value: 'HR Team' },
+                    { name: 'Management Team', value: 'Management Team' }
+                ))
         ),
     async execute(interaction: ChatInputCommandInteraction) {
         // Permissions check mapping
@@ -52,8 +82,9 @@ export default {
 
         const subcommand = interaction.options.getSubcommand();
         const targetUser = interaction.options.getUser('user');
+        const signatureRole = interaction.options.getString('role');
         const embed = new EmbedBuilder();
-        const hrSignature = `\n\n**— ${member.displayName} | ${member.roles.highest.name}**`;
+        const hrSignature = `\n\n**${member.displayName}**\n**${signatureRole} | Aura**`;
 
         // Setting a generic title and letting the description house the template, per instructions
         switch (subcommand) {
@@ -73,7 +104,7 @@ export default {
 
             case 'questions':
                 embed.setTitle('❓ HR Questions')
-                    .setDescription(`Hello ${targetUser} 👋\n\nThank you for applying to **Aura VTC**.\n\nBefore we proceed further, the HR Team has a few questions for you:\n\n1. Have you read 📑│server-rules 📜│policies-and-rules and the requirements on our TruckersMP VTC Page?\n2. Are you able to communicate in English via Voice Channel or Chat Channel without the use of any translator?\n3. Do you have any active bans on TruckersMP?\n4. What is your play-time in Euro Truck Simulator 2 and/or American Truck Simulator?\n5. Where are you from and what is your playing time per day? (e.g., 08:00 UTC to 16:00 UTC)\n\nOnce you answer these questions, we will proceed to the next step.\n\nWe look forward to your response.${hrSignature}`)
+                    .setDescription(`Hello ${targetUser} 👋\n\nThank you for applying to **Aura VTC**.\n\nBefore we proceed further, the HR Team has a few questions for you:\n\n1. Did you applied on vtc truckersmp page? If not, apply here: https://truckersmp.com/vtc/75200\n2. Have you read 📑│server-rules 📜│policies-and-rules and the requirements on our TruckersMP VTC Page?\n3. Are you able to communicate in English via Voice Channel or Chat Channel without the use of any translator?\n4. Do you have any active bans on TruckersMP?\n5. What is your play-time in Euro Truck Simulator 2 and/or American Truck Simulator?\n6. Where are you from and what is your playing time per day? (e.g., 08:00 UTC to 16:00 UTC)\n\nOnce you answer these questions, we will proceed to the next step.\n\nWe look forward to your response.${hrSignature}`)
                     .setColor('#FEE75C');
                 await interaction.reply({ content: targetUser ? `${targetUser}` : '', embeds: [embed] });
                 break;

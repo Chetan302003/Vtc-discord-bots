@@ -21,6 +21,7 @@ export const config = {
     ROLE_EVENT_TEAM: requireEnv("ROLE_EVENT_TEAM"),
     ROLE_MANAGEMENT_TEAM: requireEnv("ROLE_MANAGEMENT_TEAM"),
     ROLE_HR_TEAM: requireEnv("ROLE_HR_TEAM"),
+    ROLE_EXTERNAL_EVENT_TEAM: requireEnv("ROLE_EXTERNAL_EVENT_TEAM"),
 };
 
 // import 'dotenv/config';

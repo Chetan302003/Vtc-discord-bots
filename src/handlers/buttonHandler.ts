@@ -36,6 +36,18 @@ export async function handleButtonInteraction(interaction: ButtonInteraction) {
                     },
                     {
                         id: interaction.client.user.id,
+                        allow: [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ReadMessageHistory, PermissionsBitField.Flags.ManageChannels],
+                    },
+                    {
+                        id: config.ROLE_EVENT_TEAM,
+                        allow: [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ReadMessageHistory],
+                    },
+                    {
+                        id: config.ROLE_EXTERNAL_EVENT_TEAM,
+                        allow: [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ReadMessageHistory],
+                    },
+                    {
+                        id: config.ROLE_MANAGEMENT_TEAM,
                         allow: [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ReadMessageHistory],
                     }
                 ]
